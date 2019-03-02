@@ -1,0 +1,9 @@
+<!--吃货点餐页面-->
+<view class="tips-wrap">
+  <text class='tips-text'>还没有人点餐!</text>
+</view>
+ <view class='padding-sm'>
+    <view bindtap="gotoOrderList" class='bg-gradual-blue padding radius text-center shadow-blur my-btn'>
+      <view class="text-lg my-text">开始点餐</view>
+    </view>
+  </view>

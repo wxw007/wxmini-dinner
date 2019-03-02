@@ -1,0 +1,8 @@
+/* miniprogram/pages/index/index.wxml.wxss */
+.my-btn{
+  width: 100%;
+  background-size: cover;
+}
+.nav-title{
+  font-weight: 500;
+}

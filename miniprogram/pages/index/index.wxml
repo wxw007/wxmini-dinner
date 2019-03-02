@@ -1,0 +1,10 @@
+<!--判断用户角色页-->
+<image src='../../images/BasicsBg.png' mode='widthFix' class='png' style='width:100%;height:486rpx'></image>
+<view class='nav-list'>
+  <navigator open-type="navigate" hover-class='none' url="../{{item.url}}" class="nav-li bg-{{item.color}} my-btn" wx:for="{{elements}}" wx:key>
+    <view class="nav-title">{{item.title}}</view>
+    <view class="nav-name">{{item.name}}</view>
+    <text class='icon-{{item.icon}}'></text>
+  </navigator>
+</view>
+<button bindtap="chenfa">调用云函数</button>

@@ -1,0 +1,50 @@
+/* pages/orderlist/orderlist.wxss */
+.eating-people-box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 25vh;
+  padding-top: 20rpx;
+}
+.avator-box{
+  height: 220rpx;
+  overflow: auto;
+}
+.avator-title{
+  color: #aaa;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin-left: 10rpx;
+}
+
+.avator-item{
+  border-radius: 50%;
+  display: inline-block;
+  width: 100rpx;
+  height: 100rpx;
+  overflow: hidden;
+  background: #fff;
+  margin: 5rpx 10rpx;
+}
+.order-list-box{
+  /* background: rgb(165, 222, 248); */
+  position: fixed;
+  top: 25vh;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.control-box{
+  flex: 1;
+  display: flex;
+}
+.control-box> .control-item{
+  flex: 1;
+  font-size: 18px;
+  border: 1px solid #aaa;
+  text-align: center;
+  margin: 0 10rpx;
+  border-radius: 8rpx;
+  color: #333;
+}

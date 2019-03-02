@@ -1,0 +1,358 @@
+<!--pages/orderlist/orderlist.wxml-->
+<view class='eating-people-box'>
+  <view class='avator-title'>已点餐人:</view>
+  <scroll-view class='avator-box' scroll-y>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+    <image class="avator-item" src="https://image.weilanwl.com/img/square-4.jpg"></image>
+
+  </scroll-view>
+</view>
+<scroll-view class='order-list-box' scroll-y>
+  <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+    <view class="cu-item">
+      <view class='content'>
+        <text class='icon-emojiflashfill text-pink'></text>
+        <text class='text-grey'>红烧肉</text>
+
+      </view>
+      <view class='control-box'>
+        <view class='control-item control-btn'>-</view>
+        <view class='control-item control-btn'>0</view>
+        <view class='control-item control-btn'>+</view>
+      </view>
+      <view class='action'>
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-3.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"></view>
+          <view class="cu-avatar round sm" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+
+        </view>
+        <text class='text-grey text-sm'>4 人</text>
+      </view>
+    </view>
+
+  </view>
+</scroll-view>
