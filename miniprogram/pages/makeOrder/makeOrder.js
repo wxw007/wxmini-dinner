@@ -1,10 +1,12 @@
-// pages/deployFunctions/deployFunctions.js
+// miniprogram/pages/makeOrder/makeOrder.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    menuList:[],
+    isMakeOrder: false
 
   },
 
@@ -26,7 +28,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getMenuList()
   },
 
   /**
@@ -62,5 +64,26 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  //获取已点餐列表
+  getMenuList() {
+    wx.cloud.callFunction({
+      name: 'getMenuList',
+      success: res => {
+
+        if (res.errMsg === "cloud.callFunction:ok") {
+          let data = res.result.data;
+          this.setData({
+            menuList: data
+          })
+          console.log('成功')
+          console.log(data)
+        }
+
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
+    })
+  },
 })

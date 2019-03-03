@@ -28,7 +28,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 5,
 			"list": [
 				{
 					"id": -1,
@@ -47,6 +47,27 @@
 					"id": -1,
 					"name": "index",
 					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "orderlist",
+					"pathName": "pages/orderlist/orderlist",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "makeOrder",
+					"pathName": "pages/makeOrder/makeOrder",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "eating",
+					"pathName": "pages/eating/eating",
 					"scene": null
 				}
 			]

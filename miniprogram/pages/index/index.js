@@ -1,5 +1,7 @@
+const app = getApp();
 Component({
   data: {
+    avatarUrl:'',
     elements: [{
       title: '我是吃货',
       name: 'eating' ,
@@ -16,17 +18,39 @@ Component({
     }
     ],
   },
+  onshow: function(){
+    this.getUserInfo()
+  },
   methods: {
-    onLoad() {
-      let that = this;
-      // 获取用户信息
-      wx.getSetting({
+    getUserInfo(){
+      const that = this;
+      wx.getUserInfo({
+        success(res) {
+          console.log(res)
+          const userInfo = res.userInfo
+          const nickName = userInfo.nickName
+          const avatarUrl = userInfo.avatarUrl
+          const gender = userInfo.gender // 性别 0：未知、1：男、2：女
+          const province = userInfo.province
+          const city = userInfo.city
+          const country = userInfo.country;
+
+          app.globalData.userInfo = userInfo;
+          app.globalData.avatarUrl = avatarUrl;
+          that.setData({
+            avatarUrl: avatarUrl
+          })
+        }
+      });
+      wx.cloud.callFunction({
+        name: 'login',
+        data: {},
         success: res => {
-          if (!res.authSetting['scope.userInfo']) {
-            wx.redirectTo({
-              url: '/pages/auth/auth'
-            })
-          }
+          console.log('[云函数] [login] user openid: ', res.result.openid)
+          app.globalData.openid = res.result.openid
+        },
+        fail: err => {
+          console.error('[云函数] [login] 调用失败', err)
         }
       })
     },
@@ -47,13 +71,14 @@ Component({
         path: '/pages/index/index'
       }
     },
-    chenfa() {
+    test() {
       
         // 调用云函数
         wx.cloud.callFunction({
-          name: 'add',
+          name: 'addOrder',
           data: {a:4,b:5},
           success: res => {
+            console.log('成功')
             console.log(res)
             
           },

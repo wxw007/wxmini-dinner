@@ -1,15 +1,20 @@
 /* pages/orderlist/orderlist.wxss */
 .eating-people-box{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 25vh;
+  max-height: 25vh;
   padding-top: 20rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #eee;
+}
+.big-red{
+  color: rgb(241, 28, 28);
+  font-size: 36rpx;
 }
 .avator-box{
-  height: 220rpx;
+  max-height: 220rpx;
   overflow: auto;
+  padding-left: 20rpx;
+  box-sizing: border-box;
+ 
 }
 .avator-title{
   color: #aaa;
@@ -28,15 +33,10 @@
   margin: 5rpx 10rpx;
 }
 .order-list-box{
-  /* background: rgb(165, 222, 248); */
-  position: fixed;
-  top: 25vh;
-  bottom: 0;
-  left: 0;
-  right: 0;
+ padding-bottom: 100rpx;
 }
 .control-box{
-  flex: 1;
+  flex-basis: 200rpx;
   display: flex;
 }
 .control-box> .control-item{
@@ -47,4 +47,25 @@
   margin: 0 10rpx;
   border-radius: 8rpx;
   color: #333;
+}
+.join-btn{
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  width:100%;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+
+  line-height: 100rpx;
+  font-size: 36rpx;
+  height: 100rpx;
+  color: #fff;
+}
+
+.join-btn.red-btn{
+  background: rgb(248, 68, 68);
+}
+.price{
+  margin-left: 14rpx;
+  color: rgb(252, 180, 24);
 }

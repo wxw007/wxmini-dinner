@@ -1,0 +1,12 @@
+<view>
+  <view class="cu-bar bg-white solid-bottom" wx:for="{{menuList}}" wx:for-item="menuItem" wx:for-index="idx" wx:key="idx">
+    <view class='action'>
+      <text style='width:200rpx'>{{menuItem.name}}</text>
+      <text class="text-orange ">{{menuItem.price}}元</text> 
+    </view>
+    <view class='action'>
+      <button wx:if="{{!isMakeOrder}}" class='cu-btn bg-green shadow' data-id="{{menuItem.id}}">选它</button>
+      <button wx:else class='cu-btn bg-orange shadow' data-id="{{menuItem.id}}">退单</button>
+    </view>
+  </view>
+</view>
