@@ -1,0 +1,30 @@
+<scroll-view class="menu-list" scroll-y>
+  <view class="cu-list menu menu-avatar">
+    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{menuList}}" wx:for-item="item" wx:key bindtouchstart='ListTouchStart' bindtouchmove='ListTouchMove' bindtouchend='ListTouchEnd' data-target="move-box-{{index}}">
+      <view class="cu-avatar round lg" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
+      <view class='content'>
+        <view class='text-grey'>{{item.foodName}}</view>
+
+      </view>
+      <view class='action'>
+        <view class="price">{{item.price}} 元</view>
+      </view>
+      <view class='move' style='width: 130rpx'>
+        <view class="bg-red" bindtap="delFood" data-id="{{item._id}}">删除</view>
+      </view>
+    </view>
+  </view>
+  
+</scroll-view>
+<view class="form">
+  <view class="cu-form-group">
+    <view class='title'>菜名</view>
+    <input  value="{{foodName}}" placeholder="输入菜名" class='radius' name='input' bindinput="inputName"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class='title'>价格</view>
+    <input  value="{{price}}" placeholder="输入价格" class='radius' name='input' type="number" bindinput="inputPrice"></input>
+  </view>
+  <button class='cu-btn block bg-blue margin-tb-sm lg' bindtap="submit">
+    <text class='iconfont-spin'></text> 提交</button>
+</view>

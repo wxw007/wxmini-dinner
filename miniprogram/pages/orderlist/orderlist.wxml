@@ -10,7 +10,7 @@
   <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
    <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{orderList}}" wx:for-item="orderItem">
     <view class='content'>
-      <text class='text-grey'>{{orderItem.dishName}}</text>
+      <text class='text-grey'>{{orderItem.foodName}}</text>
       <text class="price">{{orderItem.price}}元</text>
     </view>
     <view class='action'>

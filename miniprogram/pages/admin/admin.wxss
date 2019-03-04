@@ -1,0 +1,21 @@
+/* miniprogram/pages/admin/admin.wxss */
+.price{
+  color: rgb(243, 132, 4);
+  
+}
+.form{
+  height: 320rpx;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1rpx solid #eee;
+}
+.menu-list{
+  position: fixed;
+  bottom: 320rpx;
+  top: 0;
+  width: 100%;
+}
+.cu-list>.cu-item.move-cur{
+  transform: translateX(-130rpx)
+}

@@ -1,68 +1,70 @@
-// miniprogram/pages/makeOrder/makeOrder.js
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    menuList:[],
-    isMakeOrder: false
+    menuList: [],
+    isMakeOrder: false,
+    openId: '',
 
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
+  onLoad: function(options) {
+    
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     this.getMenuList()
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
   //获取已点餐列表
@@ -76,8 +78,7 @@ Page({
           this.setData({
             menuList: data
           })
-          console.log('成功')
-          console.log(data)
+          
         }
 
       },
@@ -86,4 +87,58 @@ Page({
       }
     })
   },
+  formatDate(format) {
+    var now = new Date();
+    var year = now.getFullYear(); //得到年份
+    var month = now.getMonth();//得到月份
+    var date = now.getDate();//得到日期
+    var day = now.getDay();//得到周几
+    var hour = now.getHours();//得到小时
+    var minu = now.getMinutes();//得到分钟
+    var sec = now.getSeconds();//得到秒
+    month = month + 1;
+    if (month < 10) month = "0" + month;
+    if (date < 10) date = "0" + date;
+    if (hour < 10) hour = "0" + hour;
+    if (minu < 10) minu = "0" + minu;
+    if (sec < 10) sec = "0" + sec;
+    var time = "";
+    //精确到天
+    if (format == 1) {
+      time = year + "-" + month + "-" + date;
+    }
+    //精确到分
+    else if (format == 2) {
+      time = year + "-" + month + "-" + date + " " + hour + ":" + minu + ":" + sec;
+    }
+    return time;
+  },
+  makeOrder(e) {
+    let item = e.currentTarget.dataset.item;
+    console.log(app)
+    let avatar = app.globalData.avatarUrl;
+    let openId = app.globalData.openId;
+    let foodName = item.foodName;
+    let price = item.price;
+    let date = this.formatDate(2)
+    
+
+    wx.cloud.callFunction({
+      name: 'makeOrder',
+      data:{
+        avatar: avatar,
+        openId: openId,
+        foodName: foodName,
+        price: price,
+        date
+      }
+    })
+    .then( res => {
+      console.log(res)
+    })
+    .catch( err => {
+      console.log(err)
+    })
+
+  }
 })

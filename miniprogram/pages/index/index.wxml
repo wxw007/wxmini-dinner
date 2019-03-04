@@ -8,5 +8,5 @@
   </navigator>
 </view>
 <!-- <button bindtap="test">调用云函数</button> -->
-<button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-<image src="{{avatarUrl}}"></image>
+<!-- <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button> -->
+<!-- <image src="{{avatarUrl}}"></image> -->

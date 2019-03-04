@@ -5,13 +5,20 @@ cloud.init()
 const db = cloud.database()
 // 云函数入口函数
 exports.main = async (event, context) => {
-  var filedvalue1 = event.a
-  var filedvalue2 = event.b
+  var openId = event.openId;
+  var date = event.date;
+  var foodName = event.foodName;
+  var avatar = event.avatar;
+  var price = event.price;
+  console.log(event)
   try {
     return await db.collection('orderList').add({
       data: {
-        filed1: filedvalue1,
-        filed2: filedvalue2
+        openId,
+        date,
+        foodName,
+        avatar,
+        price
       }
     })
   } catch (e) {

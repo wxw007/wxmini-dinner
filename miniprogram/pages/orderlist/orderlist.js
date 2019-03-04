@@ -15,7 +15,6 @@ Page({
     orderList: [
 
     ],
-    orderId: '',
 
   },
 
@@ -89,22 +88,14 @@ Page({
 
         app.globalData.userInfo = userInfo;
         app.globalData.avatarUrl = avatarUrl;
-        that.setData({
-          avatarUrl: avatarUrl
-        })
       }
     });
     wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
-      }
+      name: 'getOpenId'
     })
+      .then(res => {
+        app.globalData.openId = res.result.openId;
+      })
   },
   //获取已点餐列表
   getOrderList() {
@@ -114,19 +105,14 @@ Page({
 
         if (res.errMsg === "cloud.callFunction:ok") {
           let data = res.result.data;
-          let orderList = [];
-          let orderId = '';
-          orderList = data.find(item => item.isEating);
+          let orderList = data;
           let peopleList = [];
-          orderList.list.forEach( orderItem => {
-            orderItem.peopleList.forEach(item => {
-              peopleList.push(item)
-            })
+          orderList.forEach( orderItem => {
+            
           });
           peopleList = new Set(peopleList);
           this.setData({
-            orderList: orderList.list,
-            orderId: orderList._id,
+            orderList: orderList,
             peopleList: Array.from(peopleList)
           });
           
@@ -139,8 +125,10 @@ Page({
       }
     })
   },
+ 
   //跳转点菜
   gotoMakeOrder() {
+    this.getUserInfo();
     wx.redirectTo({
       url: '../../pages/makeOrder/makeOrder'
     })

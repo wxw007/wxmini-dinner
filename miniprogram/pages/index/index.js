@@ -71,22 +71,7 @@ Component({
         path: '/pages/index/index'
       }
     },
-    test() {
-      
-        // 调用云函数
-        wx.cloud.callFunction({
-          name: 'addOrder',
-          data: {a:4,b:5},
-          success: res => {
-            console.log('成功')
-            console.log(res)
-            
-          },
-          fail: err => {
-            console.error('[云函数] [login] 调用失败', err)
-          }
-        })
-    }
+ 
   },
   pageLifetimes: {
     show() {
