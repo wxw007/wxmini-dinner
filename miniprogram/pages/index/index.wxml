@@ -1,12 +1,11 @@
 <!--判断用户角色页-->
 <image src='../../images/BasicsBg.png' mode='widthFix' class='png' style='width:100%;height:486rpx'></image>
-<view class='nav-list'>
+<view class='nav-list' wx:if="{{hasAvatar && hasOpenId}}">
   <navigator open-type="navigate" hover-class='none' url="../{{item.url}}" class="nav-li bg-{{item.color}} my-btn" wx:for="{{elements}}" wx:key>
     <view class="nav-title">{{item.title}}</view>
     <view class="nav-name">{{item.name}}</view>
     <text class='icon-{{item.icon}}'></text>
   </navigator>
 </view>
-<!-- <button bindtap="test">调用云函数</button> -->
-<button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-<!-- <image src="{{avatarUrl}}"></image> -->
+<button open-type="getUserInfo" wx:else style="width:85%;height:120rpx; margin: 0 auto" class='cu-btn block bg-blue margin-tb-sm lg' bindgetuserinfo="getUserInfo">
+    <text class='iconfont-spin'></text>登 录</button>

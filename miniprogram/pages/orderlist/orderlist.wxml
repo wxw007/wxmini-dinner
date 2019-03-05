@@ -25,7 +25,7 @@
 </scroll-view>
 <view class="join-btn">
       <button class='cu-btn round bg-green shadow' style="margin-right:50rpx" bindtap="gotoMakeOrder">我要点菜</button>
-      <button class='cu-btn round bg-orange shadow' bindtap="getUserInfo">我要蹭吃</button>
+      <button class='cu-btn round bg-orange shadow' bindtap="freeEat">我要蹭吃</button>
 </view>
 <!-- <view class="join-btn">我要入伙!</view> -->
 <!-- <view class="join-btn red-btn" wx:else bindtap="changeJoinStatus">我要退出!!</view> -->

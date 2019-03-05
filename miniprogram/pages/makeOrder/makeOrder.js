@@ -16,7 +16,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    
+
   },
 
   /**
@@ -78,7 +78,7 @@ Page({
           this.setData({
             menuList: data
           })
-          
+
         }
 
       },
@@ -90,12 +90,12 @@ Page({
   formatDate(format) {
     var now = new Date();
     var year = now.getFullYear(); //得到年份
-    var month = now.getMonth();//得到月份
-    var date = now.getDate();//得到日期
-    var day = now.getDay();//得到周几
-    var hour = now.getHours();//得到小时
-    var minu = now.getMinutes();//得到分钟
-    var sec = now.getSeconds();//得到秒
+    var month = now.getMonth(); //得到月份
+    var date = now.getDate(); //得到日期
+    var day = now.getDay(); //得到周几
+    var hour = now.getHours(); //得到小时
+    var minu = now.getMinutes(); //得到分钟
+    var sec = now.getSeconds(); //得到秒
     month = month + 1;
     if (month < 10) month = "0" + month;
     if (date < 10) date = "0" + date;
@@ -113,34 +113,33 @@ Page({
     }
     return time;
   },
-   makeOrder(e) {
-     if (!wx.getStorageSync('openId') || !wx.getStorageSync('avatar')){
-       wx.showModal({
-         title: '提示',
-         content: '请先登录',
-         showCancel: false,
-         success(res) {
-           
-         }
-       })
-       return
-     }
+  makeOrder(e) {
+    if (!wx.getStorageSync('openId') || !wx.getStorageSync('avatar')) {
+      wx.showModal({
+        title: '提示',
+        content: '请先登录',
+        showCancel: false,
+        success(res) {
+
+        }
+      })
+      return
+    }
     let item = e.currentTarget.dataset.item;
-     item.openId = wx.getStorageSync('openId');
-     item.avatar = wx.getStorageSync('avatar');
+    item.openId = wx.getStorageSync('openId');
+    item.avatar = wx.getStorageSync('avatar');
     item.date = this.formatDate(2);
     wx.cloud.callFunction({
-      name: 'makeOrder',
-      data:{
-        item
-      }
+        name: 'makeOrder',
+        data: {
+          item
+        }
+      })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
     })
-    .then( res => {
-      console.log(res)
-    })
-    .catch( err => {
-      console.log(err)
-    })
-    
   }
 })

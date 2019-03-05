@@ -1,6 +1,8 @@
 const app = getApp();
 Component({
   data: {
+    hasAvatar: false,
+    hasOpenId: false,
     avatar:'',
     elements: [{
       title: '我是吃货',
@@ -18,10 +20,25 @@ Component({
     }
     ],
   },
-  onshow: function(){
-    this.getUserInfo()
-  },
   methods: {
+    onShow: function () {
+      if (!wx.getStorageSync('avatar')) {
+        this.setData({
+          hasAvatar: false,
+        })
+      }
+      else if (!wx.getStorageSync('openId')) {
+        this.setData({
+          hasOpenId: false,
+        })
+      }
+      else {
+        this.setData({
+          hasOpenId: true,
+          hasAvatar: true,
+        })
+      }
+    },
     getUserInfo(){
       const that = this;
       wx.getUserInfo({
@@ -36,6 +53,10 @@ Component({
           const country = userInfo.country;
           wx.setStorageSync('userInfo', userInfo);
           wx.setStorageSync('avatar', avatar);
+          
+          that.setData({
+            hasAvatar: true
+          })
         }
       });
       wx.cloud.callFunction({
@@ -45,6 +66,9 @@ Component({
           console.log('[云函数] [login] user openid: ', res.result.openid)
           let openId = res.result.openid;
           wx.setStorageSync('openId', openId);
+          that.setData({
+            hasOpenId: true
+          })
         },
         fail: err => {
           console.error('[云函数] [login] 调用失败', err)
