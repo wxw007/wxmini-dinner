@@ -1,10 +1,15 @@
 <!--判断用户角色页-->
 <image src='../../images/BasicsBg.png' mode='widthFix' class='png' style='width:100%;height:486rpx'></image>
 <view class='nav-list' wx:if="{{hasAvatar && hasOpenId}}">
-  <navigator open-type="navigate" hover-class='none' url="../{{item.url}}" class="nav-li bg-{{item.color}} my-btn" wx:for="{{elements}}" wx:key>
-    <view class="nav-title">{{item.title}}</view>
-    <view class="nav-name">{{item.name}}</view>
-    <text class='icon-{{item.icon}}'></text>
+  <navigator open-type="navigate" hover-class='none' url="../orderlist/orderlist" class="nav-li bg-cyan my-btn">
+    <view class="nav-title">开始点菜</view>
+    <view class="nav-name">eating</view>
+    <text class='icon-myfill'></text>
+  </navigator>
+  <navigator wx:if="{{role=='admin'}}" open-type="navigate" hover-class='none' url="../admin/admin" class="nav-li bg-blue my-btn">
+    <view class="nav-title">我是管理员</view>
+    <view class="nav-name">admin</view>
+    <text class='icon-newsfill'></text>
   </navigator>
 </view>
 <button open-type="getUserInfo" wx:else style="width:85%;height:120rpx; margin: 0 auto" class='cu-btn block bg-blue margin-tb-sm lg' bindgetuserinfo="getUserInfo">

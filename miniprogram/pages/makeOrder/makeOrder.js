@@ -9,6 +9,7 @@ Page({
     menuList: [],
     isMakeOrder: false,
     openId: '',
+    userOrder:[],
 
   },
 
@@ -31,6 +32,7 @@ Page({
    */
   onShow: function() {
     this.getMenuList();
+   
   },
 
   /**
@@ -44,7 +46,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+  
   },
 
   /**
@@ -67,26 +69,61 @@ Page({
   onShareAppMessage: function() {
 
   },
-  //获取已点餐列表
+  //获取此人已点的菜
+  getUserOrder(menuList){
+    const that = this;
+    wx.cloud.callFunction({
+      name: 'getOrderList'
+    })
+    .then( res => {
+        let orderList= res.result.data;
+        let openId = wx.getStorageSync('openId');
+        let date = this.formatDate(1);
+        let userOrder = [];//用户已点菜的列表
+        orderList.forEach(item => {
+          if(item.openId === openId && item.date.indexOf(date) > -1){
+            userOrder.push(item.foodName)
+          }
+        });
+        
+        userOrder.forEach(userItem => {
+          menuList.forEach(menuItem => {
+            if (userItem === menuItem.foodName){
+              menuItem.disabled = true
+            }
+          })
+        })
+      that.setData({
+        menuList
+      })
+      wx.hideLoading()
+
+    })
+    .catch( err => {
+
+    })
+  },
+  //获取菜单列表
   getMenuList() {
+    wx.showLoading({
+      title: '加载中...',
+    })
+    const that = this;
     wx.cloud.callFunction({
       name: 'getMenuList',
       success: res => {
 
         if (res.errMsg === "cloud.callFunction:ok") {
-          let data = res.result.data;
-          this.setData({
-            menuList: data
-          })
-
+          let menuList = res.result.data;
+          that.getUserOrder(menuList)
         }
-
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
       }
     })
   },
+  //格式化时间
   formatDate(format) {
     var now = new Date();
     var year = now.getFullYear(); //得到年份
@@ -113,7 +150,9 @@ Page({
     }
     return time;
   },
+  //下单
   makeOrder(e) {
+    const that = this;
     if (!wx.getStorageSync('openId') || !wx.getStorageSync('avatar')) {
       wx.showModal({
         title: '提示',
@@ -125,10 +164,13 @@ Page({
       })
       return
     }
+    wx.showLoading({
+      title: '点菜中...',
+    })
     let item = e.currentTarget.dataset.item;
     item.openId = wx.getStorageSync('openId');
     item.avatar = wx.getStorageSync('avatar');
-    item.date = this.formatDate(2);
+    item.date = this.formatDate(1);
     wx.cloud.callFunction({
         name: 'makeOrder',
         data: {
@@ -136,10 +178,28 @@ Page({
         }
       })
       .then(res => {
-        console.log(res)
+        wx.showToast({
+          title: '点菜成功',
+          icon: 'success',
+          duration: 1000,
+          success(){
+            that.getMenuList()
+          }
+        })
+        wx.hideLoading();
+
       })
       .catch(err => {
+        wx.showModal({
+          title: '提示',
+          content: '点菜失败',
+          showCancel: false,
+          success(res) {
+            
+          }
+        })
         console.log(err)
+        wx.hideLoading();
     })
   }
 })

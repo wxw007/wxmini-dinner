@@ -4,21 +4,7 @@ Component({
     hasAvatar: false,
     hasOpenId: false,
     avatar:'',
-    elements: [{
-      title: '我是吃货',
-      name: 'eating' ,
-      color: 'cyan',
-      icon: 'myfill',
-      url: 'eating/eating'
-    },
-    {
-      title: '我是管理员',
-      name: 'admin',
-      color: 'blue',
-      icon: 'newsfill',
-      url: 'admin/admin'
-    }
-    ],
+    role: '',
   },
   methods: {
     onShow: function () {
@@ -37,6 +23,7 @@ Component({
           hasOpenId: true,
           hasAvatar: true,
         })
+        this.getRole()
       }
     },
     getUserInfo(){
@@ -69,22 +56,42 @@ Component({
           that.setData({
             hasOpenId: true
           })
+          that.getRole()
         },
         fail: err => {
           console.error('[云函数] [login] 调用失败', err)
         }
       })
     },
-    showModal(e) {
-      this.setData({
-        modalName: e.currentTarget.dataset.target
+    //获取用户角色
+    getRole(){
+      if(!wx.getStorageSync('openId')){
+        return
+      }
+      let openId = wx.getStorageSync('openId');
+      wx.cloud.callFunction({
+        name: 'getRole',
+        data:{
+          openId
+        }
       })
+        .then(res => {
+          console.log(res)
+          if(res.result.data.length > 0){
+            this.setData({
+              role: 'admin'
+            })
+          } else {
+            this.setData({
+              role: ''
+            })
+          }
+        })
+        .catch(err => {
+
+        })
     },
-    hideModal(e) {
-      this.setData({
-        modalName: null
-      })
-    },
+    
     onShareAppMessage() {
       return {
         title: '沙县点餐',

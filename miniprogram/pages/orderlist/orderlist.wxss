@@ -41,7 +41,7 @@
 }
 .control-box> .control-item{
   flex: 1;
-  font-size: 18px;
+  font-size: 36rpx;
   border: 1px solid #aaa;
   text-align: center;
   margin: 0 10rpx;
@@ -51,21 +51,60 @@
 .join-btn{
   position: fixed;
   bottom: 0;
-  text-align: center;
   width:100%;
-  border-top-left-radius: 10rpx;
-  border-top-right-radius: 10rpx;
-
   line-height: 100rpx;
-  font-size: 36rpx;
   height: 100rpx;
   color: #fff;
+  background: rgb(81, 132, 243);
+  
+}
+.join-btn> .btn{
+  width: 180rpx;
+  height: 100rpx;
+  float: right;
+  font-size: 28rpx;
+  text-align: center;
+  
+}
+.join-btn .orange{
+  color: rgb(241, 119, 5);
+}
+.join-btn .yellow{
+  color: rgb(243, 234, 102);
+}
+.join-btn .bg-orange{
+  background: rgb(241, 119, 5);
+
+}
+.join-btn .bg-green{
+  background: rgb(99, 185, 132);
 }
 
-.join-btn.red-btn{
-  background: rgb(248, 68, 68);
-}
 .price{
   margin-left: 14rpx;
   color: rgb(252, 180, 24);
+}
+.bottom-text{
+  padding-left:10rpx;
+  display: inline-block
+}
+.bottom-text> view{
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.tips-wrap{
+  text-align: center;
+  margin: 400rpx auto 250rpx auto;
+}
+.tips-text{
+  color: #444;
+  text-align: center;
+  font-size: 20px;
+}
+.my-text{
+  font-size: 20px
+}
+.my-btn{
+  width: 80%;
+  margin: 0 auto;
 }

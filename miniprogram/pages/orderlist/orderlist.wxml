@@ -1,31 +1,48 @@
 <!--pages/orderlist/orderlist.wxml-->
-<view class='eating-people-box'>
-  <text class='avator-title'>已点餐 <text class="color-orange">{{peopleList.length}}</text>人:</text>
-  <text class='avator-title'>已点菜 <text class="color-orange">{{orderList.length}}</text>份</text>
-  <text style='margin-left: 30rpx;'>建议点 <text class="big-red">{{peopleList.length +1}}</text> 份菜</text>
-  <scroll-view class='avator-box' scroll-y>
-    <image class="avator-item" wx:for="{{peopleList}}" wx:key wx:for-item="item" src="{{item}}"></image>
-  </scroll-view>
-</view>
-<scroll-view class='order-list-box' scroll-y>
-  <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
-   <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{orderList2}}" wx:key wx:for-item="orderItem">
-    <view class='content'>
-      <text class='text-grey'>{{orderItem.foodName}}</text>
-      <text class="price">{{orderItem.price}}元</text>
-    </view>
-    <view class='action'>
-      <view class="cu-avatar-group">
-        <view class="cu-avatar round sm" wx:for="{{orderItem.avatarList}}" wx:for-item="imgItem" wx:key style="background-image:url({{imgItem}});"></view>
+
+<view wx:if="{{orderList.length > 0}}">
+  <view class='eating-people-box'>
+    <text class='avator-title'>已点餐 <text class="color-orange">{{peopleList.length}}</text>人:</text>
+    <text class='avator-title'>已点菜 <text class="color-orange">{{orderList.length}}</text>份</text>
+    <text style='margin-left: 30rpx;'>建议点 <text class="big-red">{{peopleList.length +1}}</text> 份菜</text>
+    <scroll-view class='avator-box' scroll-y>
+      <image class="avator-item" wx:for="{{peopleList}}" wx:key wx:for-item="item" src="{{item}}"></image>
+    </scroll-view>
+  </view>
+  <scroll-view class='order-list-box' scroll-y>
+    <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
+      <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{orderList2}}" wx:key wx:for-item="orderItem">
+        <view class='content'>
+          <text class='text-grey'>{{orderItem.foodName}}</text>
+          <text class="price">{{orderItem.price}}元</text>
+        </view>
+        <view class='action'>
+          <view class="cu-avatar-group">
+            <view class="cu-avatar round sm" wx:for="{{orderItem.avatarList}}" wx:for-item="imgItem" wx:key style="background-image:url({{imgItem}});"></view>
+          </view>
+          <text class='text-grey text-sm'>{{orderItem.avatarList.length}} 份</text>
+        </view>
       </view>
-      <text class='text-grey text-sm'>{{orderItem.avatarList.length}} 人</text>
     </view>
+  </scroll-view>
+  <view class='join-btn'>
+    <view class="bottom-text" style=''>
+      <view>总金额:
+        <text class="yellow">{{total}}</text> 元</view>
+      <view>总菜数:
+        <text class="orange">{{orderList.length}}</text> 份</view>
+    </view>
+    <view class='btn bg-green' bindtap="gotoMakeOrder">我要点菜</view>
+    <view class='btn bg-orange' bindtap="freeEat">我要蹭吃</view>
   </view>
-  </view>
-</scroll-view>
-<view class="join-btn">
-      <button class='cu-btn round bg-green shadow' style="margin-right:50rpx" bindtap="gotoMakeOrder">我要点菜</button>
-      <button class='cu-btn round bg-orange shadow' bindtap="freeEat">我要蹭吃</button>
 </view>
-<!-- <view class="join-btn">我要入伙!</view> -->
-<!-- <view class="join-btn red-btn" wx:else bindtap="changeJoinStatus">我要退出!!</view> -->
+<view wx:else>
+  <view class="tips-wrap">
+    <text class='tips-text'>还没有人点餐!</text>
+  </view>
+  <view class='padding-sm'>
+    <navigator url="../makeOrder/makeOrder" class='bg-gradual-blue padding radius text-center shadow-blur my-btn'>
+      <view class="text-lg my-text">开始点餐</view>
+    </navigator>
+  </view>
+</view>

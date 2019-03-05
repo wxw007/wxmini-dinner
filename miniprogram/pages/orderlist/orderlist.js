@@ -14,7 +14,8 @@ Page({
     peopleList: [],
     orderList: [],
     orderList2: [],
-    freeList: []
+    freeList: [],
+    total: 0,
   },
 
   /**
@@ -49,7 +50,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    this.getUserInfo()
+    
   },
 
   /**
@@ -100,30 +101,42 @@ Page({
   },
   //获取已点餐列表
   getOrderList() {
+    wx.showLoading({
+      title: '加载中',
+    });
+    let date = this.formatDate(1)
     const that = this;
     wx.cloud.callFunction({
       name: 'getOrderList',
+      data:{
+        date
+      },
       success: res => {
         if (res.errMsg === "cloud.callFunction:ok") {
           let data = res.result.data;
           let orderList = data;
+          let total = 0;
           let peopleList = [];
           orderList.forEach(orderItem => {
-            peopleList.push(orderItem.avatar)
+            peopleList.push(orderItem.avatar);
+            total = (total * 1000 + parseFloat(orderItem.price) * 1000) / 1000;
           });
           peopleList = Array.from(new Set(peopleList))
           let arr = that.formatList(orderList)
           this.setData({
             orderList2: arr,
             peopleList: peopleList,
-            orderList: orderList
+            orderList,
+            total
           });
-
         }
+        wx.hideLoading()
+
 
 
       },
       fail: err => {
+        wx.hideLoading()
         console.error('[云函数] [login] 调用失败', err)
       }
     })
@@ -141,7 +154,18 @@ Page({
 
   //跳转点菜
   gotoMakeOrder() {
-    wx.redirectTo({
+    if (!wx.getStorageSync('openId') || !wx.getStorageSync('avatar')) {
+      wx.showModal({
+        title: '提示',
+        content: '请先登录',
+        showCancel: false,
+        success(res) {
+
+        }
+      })
+      return
+    }
+    wx.navigateTo({
       url: '../../pages/makeOrder/makeOrder'
     })
   },
@@ -157,6 +181,22 @@ Page({
         }
       })
       return
+    }
+    let openId = wx.getStorageSync('openId');
+    let orderList = this.data.orderList;
+    let isMakeOrder = orderList.find(item => {
+      return item.openId === openId
+    })
+    if (!!isMakeOrder){
+      wx.showModal({
+        title: '提示',
+        content: '你已点菜',
+        showCancel: false,
+        success(res) {
+
+        }
+      })
+      return;
     }
     let item = {};
     item.price = null;
@@ -208,5 +248,6 @@ Page({
     })
     console.log(orderList)
     return orderList
-  }
+  },
+ 
 })
