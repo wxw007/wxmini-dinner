@@ -12,9 +12,9 @@ Page({
       adviceNum: 7
     },
     peopleList: [],
-    orderList: [
+    orderList: [],
+    orderList2: [],
 
-    ],
 
   },
 
@@ -99,23 +99,25 @@ Page({
   },
   //获取已点餐列表
   getOrderList() {
+    const that = this;
     wx.cloud.callFunction({
       name: 'getOrderList',
       success: res => {
-
         if (res.errMsg === "cloud.callFunction:ok") {
           let data = res.result.data;
           let orderList = data;
           let peopleList = [];
-          orderList.forEach( orderItem => {
-            
+          orderList.forEach(orderItem => {
+            peopleList.push(orderItem.avatar)
           });
-          peopleList = new Set(peopleList);
+          peopleList = Array.from(new Set(peopleList))
+          let arr = that.formatList(orderList)
           this.setData({
-            orderList: orderList,
-            peopleList: Array.from(peopleList)
+            orderList2: arr,
+            peopleList: peopleList,
+            orderList: orderList
           });
-          
+
         }
 
 
@@ -136,6 +138,28 @@ Page({
   //蹭吃
   freeEat() {
 
+  },
+  formatList(arr) {
+    var foodList = [];
+    var orderList = [];
+    arr.forEach(item => {
+      foodList.push(item.foodName);
+    });
+    foodList = Array.from(new Set(foodList));
+    foodList.forEach(foodName => {
+      let t = { foodName: '', price: null, avatarList: [], openIdList: [] };
+      arr.forEach(orderItem => {
+        if (foodName === orderItem.foodName) {
+          t.foodName = foodName;
+          t.price = orderItem.price;
+          t.avatarList.push(orderItem.avatar);
+          t.openIdList.push(orderItem.openId);
+        }
+      })
+      orderList.push(t)
+
+    })
+    return orderList
   }
 })
  

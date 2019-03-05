@@ -1,7 +1,7 @@
 const app = getApp();
 Component({
   data: {
-    avatarUrl:'',
+    avatar:'',
     elements: [{
       title: '我是吃货',
       name: 'eating' ,
@@ -29,17 +29,13 @@ Component({
           console.log(res)
           const userInfo = res.userInfo
           const nickName = userInfo.nickName
-          const avatarUrl = userInfo.avatarUrl
+          const avatar = userInfo.avatarUrl
           const gender = userInfo.gender // 性别 0：未知、1：男、2：女
           const province = userInfo.province
           const city = userInfo.city
           const country = userInfo.country;
-
-          app.globalData.userInfo = userInfo;
-          app.globalData.avatarUrl = avatarUrl;
-          that.setData({
-            avatarUrl: avatarUrl
-          })
+          wx.setStorageSync('userInfo', userInfo);
+          wx.setStorageSync('avatar', avatar);
         }
       });
       wx.cloud.callFunction({
@@ -47,7 +43,8 @@ Component({
         data: {},
         success: res => {
           console.log('[云函数] [login] user openid: ', res.result.openid)
-          app.globalData.openid = res.result.openid
+          let openId = res.result.openid;
+          wx.setStorageSync('openId', openId);
         },
         fail: err => {
           console.error('[云函数] [login] 调用失败', err)

@@ -5,8 +5,7 @@
       <text class="text-orange ">{{menuItem.price}}元</text> 
     </view>
     <view class='action'>
-      <button wx:if="{{!isMakeOrder}}" class='cu-btn bg-green shadow' data-item="{{menuItem}}" data-openid="menuItem.openid" bindtap="makeOrder">选它</button>
-   
+      <button wx:if="{{!isMakeOrder}}" class='cu-btn bg-green shadow' data-item="{{menuItem}}" bindtap="makeOrder">选它</button>
     </view>
   </view>
 </view>

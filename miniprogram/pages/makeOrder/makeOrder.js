@@ -30,7 +30,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.getMenuList()
+    this.getMenuList();
   },
 
   /**
@@ -113,24 +113,26 @@ Page({
     }
     return time;
   },
-  makeOrder(e) {
+   makeOrder(e) {
+     if (!wx.getStorageSync('openId') || !wx.getStorageSync('avatar')){
+       wx.showModal({
+         title: '提示',
+         content: '请先登录',
+         showCancel: false,
+         success(res) {
+           
+         }
+       })
+       return
+     }
     let item = e.currentTarget.dataset.item;
-    console.log(app)
-    let avatar = app.globalData.avatarUrl;
-    let openId = app.globalData.openId;
-    let foodName = item.foodName;
-    let price = item.price;
-    let date = this.formatDate(2)
-    
-
+     item.openId = wx.getStorageSync('openId');
+     item.avatar = wx.getStorageSync('avatar');
+    item.date = this.formatDate(2);
     wx.cloud.callFunction({
       name: 'makeOrder',
       data:{
-        avatar: avatar,
-        openId: openId,
-        foodName: foodName,
-        price: price,
-        date
+        item
       }
     })
     .then( res => {
@@ -139,6 +141,6 @@ Page({
     .catch( err => {
       console.log(err)
     })
-
+    
   }
 })
