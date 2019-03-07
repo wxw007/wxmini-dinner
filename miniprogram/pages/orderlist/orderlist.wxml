@@ -1,5 +1,11 @@
 <!--pages/orderlist/orderlist.wxml-->
-
+<view class="cu-custom" style="height:{{CustomBar}}px;">
+  <view class="cu-bar fixed bg-gradual-blue" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
+    <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
+      <text class='icon-back'></text> 图标
+    </navigator>
+  </view>
+</view>
 <view wx:if="{{orderList.length > 0}}">
   <view class='eating-people-box'>
     <text class='avator-title'>已点餐 <text class="color-orange">{{peopleList.length}}</text>人:</text>
@@ -10,19 +16,29 @@
     </scroll-view>
   </view>
   <scroll-view class='order-list-box' scroll-y>
-    <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
-      <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{orderList2}}" wx:key wx:for-item="orderItem">
-        <view class='content'>
-          <text class='text-grey'>{{orderItem.foodName}}</text>
-          <text class="price">{{orderItem.price}}元</text>
-        </view>
-        <view class='action'>
-          <view class="cu-avatar-group">
-            <view class="cu-avatar round sm" wx:for="{{orderItem.avatarList}}" wx:for-item="imgItem" wx:key style="background-image:url({{imgItem}});"></view>
+    <!-- <view class="cu-list menu menu-avatar">
+      <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{orderList2}}" wx:key wx:for-item="orderItem" bindtouchstart='ListTouchStart' bindtouchmove='ListTouchMove' bindtouchend='ListTouchEnd' data-target="move-box-{{index}}">
+        <view class="cu-item {{menuArrow?'arrow':''}}">
+          <view class='content'>
+            <text class='text-grey'>{{orderItem.foodName}}</text>
+            <text class="price">{{orderItem.price}}元</text>
           </view>
-          <text class='text-grey text-sm'>{{orderItem.avatarList.length}} 份</text>
+          <view class='action'>
+            <view class="cu-avatar-group">
+              <view class="cu-avatar round sm" wx:for="{{orderItem.avatarList}}" wx:for-item="imgItem" wx:key style="background-image:url({{imgItem}});"></view>
+            </view>
+            <text class='text-grey text-sm'>{{orderItem.avatarList.length}} 份</text>
+          </view>
+        </view>
+        <view class='move' style='width: 130rpx'>
+          <view class="bg-red" bindtap="delFood" data-id="{{item._id}}">删除</view>
         </view>
       </view>
+    </view> -->
+    <view class="order-item">
+      <view class="item-left"></view>
+      <view class="item-mid"></view>
+      <view class="item-right"></view>
     </view>
   </scroll-view>
   <view class='join-btn'>

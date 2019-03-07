@@ -6,10 +6,11 @@
     "pages/admin/admin"
   ],
   "window": {
-    "backgroundColor": "#fff",
+    "backgroundColor": "#000000",
     "backgroundTextStyle": "light",
+    "navigationStyle": "custom",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "中午吃啥",
+    "navigationBarTitleText": "中午1吃啥",
     "navigationBarTextStyle": "black"
   }
 }

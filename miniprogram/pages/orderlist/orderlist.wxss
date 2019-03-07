@@ -108,3 +108,29 @@
   width: 80%;
   margin: 0 auto;
 }
+.cu-item{
+  width: 100%;
+}
+.cu-list>.cu-item.move-cur{
+  transform: translateX(-130rpx)
+}
+.cu-list.menu-avatar>.cu-item{
+  height: 120rpx;
+  padding-left: 25rpx;
+}
+.cu-avatar-group{
+  padding-left: 8rpx;
+  padding-right: 35rpx;
+}
+.cu-list.menu-avatar>.cu-item .action{
+  text-align: left;
+}
+.cu-list.menu-avatar>.cu-item .action view + view{
+  margin-top: 0;
+}
+
+
+.order-item{
+  height: 120rpx;
+  border-bottom: 1rpx solid #fff;
+}

@@ -75,8 +75,16 @@ Page({
 
   // ListTouch计算方向
   ListTouchMove(e) {
+    let ListTouchDirection;
+    if (e.touches[0].pageX - this.data.ListTouchStart > 50){
+      ListTouchDirection = 'right'
+    } else if (e.touches[0].pageX - this.data.ListTouchStart < -50){
+      ListTouchDirection = 'left'
+    } else {
+      return
+    }
     this.setData({
-      ListTouchDirection: e.touches[0].pageX - this.data.ListTouchStart > 0 ? 'right' : 'left'
+      ListTouchDirection
     })
   },
 
@@ -96,18 +104,17 @@ Page({
     })
   },
   inputName(e) {
-    console.log(1)
     this.setData({
       foodName: e.detail.value
     })
   },
   inputPrice(e) {
-    console.log(2)
     this.setData({
       price: e.detail.value
     })
   },
   submit() {
+    const that = this;
     if(!this.data.foodName || !this.data.price){
       wx.showModal({
         title: '提示',
@@ -116,11 +123,21 @@ Page({
       })
       return
     }
+    let isExits = null;
+    isExits = this.data.menuList.findIndex( item => {
+      return item.foodName == that.data.foodName
+    })
+    if (isExits != -1){
+      wx.showModal({
+        title: '提示',
+        content: '菜品已存在',
+        showCancel: false
+      })
+      return
+    }
     wx.showLoading({
       title: '上传中...',
     })
-
-    const that = this;
     wx.cloud.callFunction({
       name: 'addFood',
       data: {

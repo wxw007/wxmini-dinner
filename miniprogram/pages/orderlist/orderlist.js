@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
     isJoin: false,
     alreadyOrder: {
       peopleNum: 6,
@@ -171,6 +173,7 @@ Page({
   },
   //蹭吃
   freeEat() {
+    const that = this;
     if (!wx.getStorageSync('openId') || !wx.getStorageSync('avatar')) {
       wx.showModal({
         title: '提示',
@@ -212,6 +215,7 @@ Page({
         }
       })
       .then(res => {
+        that.getOrderList()
         console.log(res)
       })
       .catch(err => {
@@ -248,6 +252,43 @@ Page({
     })
     console.log(orderList)
     return orderList
+  },
+  // ListTouch触摸开始
+  ListTouchStart(e) {
+    this.setData({
+      ListTouchStart: e.touches[0].pageX
+    })
+  },
+
+  // ListTouch计算方向
+  ListTouchMove(e) {
+    let ListTouchDirection;
+    if (e.touches[0].pageX - this.data.ListTouchStart > 50) {
+      ListTouchDirection = 'right'
+    } else if (e.touches[0].pageX - this.data.ListTouchStart < -50) {
+      ListTouchDirection = 'left'
+    } else {
+      return
+    }
+    this.setData({
+      ListTouchDirection
+    })
+  },
+
+  // ListTouch计算滚动
+  ListTouchEnd(e) {
+    if (this.data.ListTouchDirection == 'left') {
+      this.setData({
+        modalName: e.currentTarget.dataset.target
+      })
+    } else {
+      this.setData({
+        modalName: null
+      })
+    }
+    this.setData({
+      ListTouchDirection: null
+    })
   },
  
 })

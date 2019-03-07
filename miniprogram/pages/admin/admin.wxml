@@ -23,7 +23,7 @@
   </view>
   <view class="cu-form-group">
     <view class='title'>价格</view>
-    <input  value="{{price}}" placeholder="输入价格" class='radius' name='input' type="number" bindinput="inputPrice"></input>
+    <input  value="{{price}}" placeholder="输入价格" class='radius' name='input' type="digit" bindinput="inputPrice"></input>
   </view>
   <button class='cu-btn block bg-blue margin-tb-sm lg' bindtap="submit">
     <text class='iconfont-spin'></text> 提交</button>

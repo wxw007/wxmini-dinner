@@ -1333,7 +1333,7 @@ button.icon.lg {
 
 .cu-list>.cu-item {
   transform: translateX(0rpx);
-  transition: all 0.6s ease-in-out 0s;
+  transition: all .4s ease-in-out;
 }
 
 .cu-list>.cu-item .move {
