@@ -1,17 +1,46 @@
 /* pages/orderlist/orderlist.wxss */
 .eating-people-box{
-  max-height: 25vh;
-  padding-top: 20rpx;
+  height: 50vh;
   background: #fff;
   border-bottom: 1rpx solid #eee;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  right: 0;
+  box-shadow: 0 0 20px #ccc;
+  transform: translateX(120%);
+  transition: all .3s ease-in-out;
+  opacity: 0;
+}
+.eating-people-box.show{
+  transform: translateX(0);
+  opacity: 1;
+}
+.show-info-btn{
+  position: fixed;
+  z-index: 1000;
+  bottom: 200rpx;
+  width: 160rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  right: 0;
+  opacity: .8;
+  font-size: 32rpx;
+  border-radius: 100rpx;
+  transform: translateX(30%);
+  box-sizing: border-box;
+  padding-left: 30rpx;
+
 }
 .big-red{
   color: rgb(241, 28, 28);
   font-size: 36rpx;
 }
 .avator-box{
-  max-height: 220rpx;
+  height: 500rpx;
   overflow: auto;
+  margin-top: 20rpx;
   padding-left: 20rpx;
   box-sizing: border-box;
  
@@ -38,15 +67,6 @@
 .control-box{
   flex-basis: 200rpx;
   display: flex;
-}
-.control-box> .control-item{
-  flex: 1;
-  font-size: 36rpx;
-  border: 1px solid #aaa;
-  text-align: center;
-  margin: 0 10rpx;
-  border-radius: 8rpx;
-  color: #333;
 }
 .join-btn{
   position: fixed;
@@ -108,29 +128,50 @@
   width: 80%;
   margin: 0 auto;
 }
-.cu-item{
-  width: 100%;
+.order-item-avatar{
+  overflow: hidden;
+  padding-left: 20rpx;
+  background: rgb(252, 249, 248);
+  box-shadow: 0px 0px 1rpx rgb(212, 211, 211) inset;
+  box-sizing: border-box;
+  padding-right: 100rpx;
+  position: relative;
 }
-.cu-list>.cu-item.move-cur{
-  transform: translateX(-130rpx)
+.order-item-avatar .order-item-avatar-item{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin: 16rpx 10rpx;
+  float: left;
+  position: relative;
 }
-.cu-list.menu-avatar>.cu-item{
-  height: 120rpx;
-  padding-left: 25rpx;
+.order-item-avatar-item .x{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 40rpx;
+  width: 40rpx;
+  border-radius: 50%;
+  text-align: center;
+  right: 0;
+  top: 0;
+  background: rgba(94, 93, 93, 0.5);
+  color: #fff;
+  
+   
 }
-.cu-avatar-group{
-  padding-left: 8rpx;
-  padding-right: 35rpx;
+.hide-people-list{
+  position: absolute;
+  right: 20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  color:rgb(206, 204, 204);
+  
 }
-.cu-list.menu-avatar>.cu-item .action{
-  text-align: left;
+.height-0{
+  height: 0;
 }
-.cu-list.menu-avatar>.cu-item .action view + view{
-  margin-top: 0;
-}
-
-
-.order-item{
-  height: 120rpx;
-  border-bottom: 1rpx solid #fff;
+.height-auto{
+  height: auto;
 }

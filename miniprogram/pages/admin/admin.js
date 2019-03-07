@@ -1,10 +1,13 @@
 // miniprogram/pages/admin/admin.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    StatusBar: app.globalData.StatusBar,
+    CustomBar: app.globalData.CustomBar,
     foodName: '',
     price: null,
     menuList:[],

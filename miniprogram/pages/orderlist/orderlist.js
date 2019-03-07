@@ -17,7 +17,10 @@ Page({
     orderList: [],
     orderList2: [],
     freeList: [],
+    riceList:[],
     total: 0,
+    role: '',
+    isShowInfo: false
   },
 
   /**
@@ -39,6 +42,7 @@ Page({
    */
   onShow: function() {
     this.getOrderList();
+    this.getRole();
   },
 
   /**
@@ -74,6 +78,41 @@ Page({
    */
   onShareAppMessage: function() {
 
+  },
+  //获取用户角色
+  getRole() {
+    if (!wx.getStorageSync('openId')) {
+      return
+    }
+    let openId = wx.getStorageSync('openId');
+    wx.cloud.callFunction({
+      name: 'getRole',
+      data: {
+        openId
+      }
+    })
+      .then(res => {
+        console.log(res)
+        if (res.result.data.length > 0) {
+          this.setData({
+            role: 'admin'
+          })
+        } else {
+          this.setData({
+            role: ''
+          })
+        }
+      })
+      .catch(err => {
+
+      })
+  },
+  showInfo() {
+    let isShowInfo = !this.data.isShowInfo;
+    console.log(isShowInfo)
+    this.setData({
+      isShowInfo
+    })
   },
   formatDate(format) {
     var now = new Date();
@@ -123,7 +162,9 @@ Page({
             peopleList.push(orderItem.avatar);
             total = (total * 1000 + parseFloat(orderItem.price) * 1000) / 1000;
           });
-          peopleList = Array.from(new Set(peopleList))
+          peopleList = Array.from(new Set(peopleList));
+          that.getFreeList(orderList);
+          that.getRiceList(orderList)
           let arr = that.formatList(orderList)
           this.setData({
             orderList2: arr,
@@ -149,8 +190,28 @@ Page({
     arr.forEach(item => {
       if(!item.foodName){
         let p = {};
-        freeList.push(item.avatar)
+        p.avatar = item.avatar;
+        p.openId = item.openId;
+        freeList.push(p)
       }
+    })
+    this.setData({
+      freeList
+    })
+  },
+  //生成米饭列表
+  getRiceList(arr) {
+    let riceList = [];
+    arr.forEach(item => {
+      if (item.foodName.indexOf('米饭')> -1) {
+        let p = {};
+        p.avatar = item.avatar;
+        p.openId = item.openId;
+        riceList.push(p)
+      }
+    })
+    this.setData({
+      riceList
     })
   },
 
@@ -207,7 +268,7 @@ Page({
     item.seller = '沙县小吃',
       item.openId = wx.getStorageSync('openId');
     item.avatar = wx.getStorageSync('avatar');
-    item.date = this.formatDate(2);
+    item.date = this.formatDate(1);
     wx.cloud.callFunction({
         name: 'makeOrder',
         data: {
@@ -236,21 +297,24 @@ Page({
       let t = {
         foodName: '',
         price: null,
-        avatarList: [],
-        openIdList: []
+        peopleList:[],
+        itemList: [],
       };
       arr.forEach(orderItem => {
         if (orderItem.foodName === foodName) {
           t.foodName = foodName;
           t.price = orderItem.price;
-          t.avatarList.push(orderItem.avatar);
-          t.openIdList.push(orderItem.openId);
+          t.isShowPeopleList = false;
+          let p = {};
+          p.avatar = orderItem.avatar;
+          p.openId = orderItem.openId;
+          t.peopleList.push(p)
+          t.itemList.push(orderItem)
         }
       })
       orderList.push(t)
 
     })
-    console.log(orderList)
     return orderList
   },
   // ListTouch触摸开始
@@ -290,5 +354,69 @@ Page({
       ListTouchDirection: null
     })
   },
+  showPeopleList(e){
+    let currentIndex = e.currentTarget.dataset.index;
+    let str = `orderList2[${currentIndex}].isShowPeopleList`;
+    this.setData({
+      [str]: true
+    })
+  },
+  hidePeopleList(e){
+    let currentIndex = e.currentTarget.dataset.index;
+    let str = `orderList2[${currentIndex}].isShowPeopleList`;
+    this.setData({
+      [str]: false
+    })
+  },
+  delOrder(e) {
+    wx.showLoading({
+      title: '删除中',
+    });
+    let date = this.formatDate(1);
+    let foodName = e.currentTarget.dataset.foodname;
+    let openId = e.currentTarget.dataset.item.openId;
+    wx.cloud.callFunction({
+      name: 'delOrder',
+      data:{
+        foodName,
+        openId,
+        date
+      }
+    })
+    .then( res => {
+      wx.hideLoading();
+      if (res.result.errMsg === 'collection.remove:ok'){
+        this.getOrderList()
+      }
+    })
+    .catch( err => {
+      wx.hideLoading();
+      console.log(err)
+    })
+  },
+  delOrderRow(e){
+    wx.showLoading({
+      title: '删除中',
+    });
+    let date = this.formatDate(1);
+    let foodName = e.currentTarget.dataset.foodname;
+    wx.cloud.callFunction({
+      name: 'delOrderRow',
+      data: {
+        foodName,
+        date
+      }
+    })
+      .then(res => {
+        wx.hideLoading()
+        if (res.result.errMsg === 'collection.remove:ok') {
+          this.getOrderList()
+        }
+      })
+      .catch(err => {
+        wx.hideLoading()
+        console.log(err)
+      })
+  }
  
 })

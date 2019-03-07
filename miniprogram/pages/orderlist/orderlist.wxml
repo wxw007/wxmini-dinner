@@ -2,43 +2,57 @@
 <view class="cu-custom" style="height:{{CustomBar}}px;">
   <view class="cu-bar fixed bg-gradual-blue" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
     <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">
-      <text class='icon-back'></text> 图标
+      <text class='icon-back'></text> 返回
     </navigator>
   </view>
 </view>
 <view wx:if="{{orderList.length > 0}}">
-  <view class='eating-people-box'>
-    <text class='avator-title'>已点餐 <text class="color-orange">{{peopleList.length}}</text>人:</text>
-    <text class='avator-title'>已点菜 <text class="color-orange">{{orderList.length}}</text>份</text>
-    <text style='margin-left: 30rpx;'>建议点 <text class="big-red">{{peopleList.length +1}}</text> 份菜</text>
+  <view class="show-info-btn bg-gradual-blue padding radius  shadow-blur" bindtap="showInfo">
+    {{isShowInfo ? "收起" : "查看"}}</view>
+  <view class='eating-people-box {{isShowInfo ? "show" : ""}}'>
+    <view>
+      <text class='avator-title'>点餐: <text class="color-orange">{{peopleList.length - freeList.length}}</text>人:</text>
+      <text class='avator-title'>已点菜: <text class="color-orange">{{orderList.length - freeList.length - riceList.length}}</text>份</text>
+      <text class='avator-title'>已点饭: <text class="color-orange">{{riceList.length}}</text>份</text>
+    </view>
+    <view>
+      <text class='avator-title'>蹭吃: <text class="color-orange">{{freeList.length}}</text>人</text>
+      <text style='margin-left: 30rpx;'>建议点 <text class="big-red">{{peopleList.length +1}}</text> 份菜</text>
+    </view>
     <scroll-view class='avator-box' scroll-y>
       <image class="avator-item" wx:for="{{peopleList}}" wx:key wx:for-item="item" src="{{item}}"></image>
+     
     </scroll-view>
   </view>
   <scroll-view class='order-list-box' scroll-y>
-    <!-- <view class="cu-list menu menu-avatar">
-      <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{orderList2}}" wx:key wx:for-item="orderItem" bindtouchstart='ListTouchStart' bindtouchmove='ListTouchMove' bindtouchend='ListTouchEnd' data-target="move-box-{{index}}">
-        <view class="cu-item {{menuArrow?'arrow':''}}">
+    <view wx:for="{{orderList2}}" wx:key wx:for-item="orderItem">
+      <view class="cu-list menu menu-avatar">
+        <view class="cu-item {{role === 'admin' && modalName=='move-box-'+ index?'move-cur':''}}" bindtouchstart='ListTouchStart' bindtouchmove='ListTouchMove' bindtouchend='ListTouchEnd' data-target="move-box-{{index}}">
+          <view class="cu-avatar round lg" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></view>
           <view class='content'>
-            <text class='text-grey'>{{orderItem.foodName}}</text>
-            <text class="price">{{orderItem.price}}元</text>
+            <view class='text-orange'>{{orderItem.foodName}}</view>
+            <view class='text-gray text-sm'>
+              <text>{{orderItem.price}}元</text> *
+              <text>{{orderItem.peopleList.length}}份</text>
+            </view>
           </view>
           <view class='action'>
-            <view class="cu-avatar-group">
-              <view class="cu-avatar round sm" wx:for="{{orderItem.avatarList}}" wx:for-item="imgItem" wx:key style="background-image:url({{imgItem}});"></view>
-            </view>
-            <text class='text-grey text-sm'>{{orderItem.avatarList.length}} 份</text>
+            <text>{{1000 * orderItem.price * orderItem.peopleList.length / 1000}} 元</text>
+          </view>
+          <view class='move'>
+            <view class='bg-grey' bindtap="showPeopleList" data-index="{{index}}">管理</view>
+            <view class="bg-red" bindtap="delOrderRow" data-foodname="{{orderItem.foodName}}">删除</view>
           </view>
         </view>
-        <view class='move' style='width: 130rpx'>
-          <view class="bg-red" bindtap="delFood" data-id="{{item._id}}">删除</view>
+        <view class='order-item-avatar {{orderItem.isShowPeopleList ? "height-auto" : "height-0"}}'>
+          <view wx:for="{{orderItem.peopleList}}" wx:key wx:for-item="peopleItem" class='order-item-avatar-item' style='background-image: url({{peopleItem.avatar}}); background-size: cover'>
+            <view class='x' bindtap="delOrder" data-item="{{peopleItem}}" data-foodname="{{orderItem.foodName}}">x</view>
+          </view>
+          <text class='icon-fold hide-people-list' bindtap="hidePeopleList" data-index="{{index}}">收起</text>
         </view>
+
       </view>
-    </view> -->
-    <view class="order-item">
-      <view class="item-left"></view>
-      <view class="item-mid"></view>
-      <view class="item-right"></view>
+
     </view>
   </scroll-view>
   <view class='join-btn'>
