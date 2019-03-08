@@ -30,19 +30,7 @@
 		"miniprogram": {
 			"current": 6,
 			"list": [
-				{
-					"id": -1,
-					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "add",
-					"pathName": "pages/addFunction/addFunction",
-					"query": "",
-					"scene": null
-				},
+				
 				{
 					"id": -1,
 					"name": "index",
@@ -64,13 +52,7 @@
 					"query": "",
 					"scene": null
 				},
-				{
-					"id": -1,
-					"name": "eating",
-					"pathName": "pages/eating/eating",
-					"query": "",
-					"scene": null
-				},
+				
 				{
 					"id": -1,
 					"name": "admin",
