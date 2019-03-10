@@ -1,6 +1,6 @@
 <view class="cu-custom" style="height:{{CustomBar}}px;">
   <view class="cu-bar fixed bg-gradual-blue" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;">
-    <navigator class='action' url="/pages/orderList/orderList" hover-class="none">
+    <navigator class='action' url="/pages/orderlist/orderlist" hover-class="none">
       <text class='icon-back'></text> 返回
     </navigator>
   </view>
@@ -13,7 +13,7 @@
     </view>
     <view class='action'>
     <button wx:if="{{menuItem.disabled}}" disabled class='cu-btn bg-green shadow'>已点</button>
-      <button wx:else class='cu-btn bg-green shadow' data-item="{{menuItem}}" bindtap="makeOrder">选它</button>
+      <button wx:else class='cu-btn bg-green shadow' data-item="{{menuItem}}" bindtap="makeOrder" data-idx="{{idx}}">选它</button>
       
     </view>
   </view>

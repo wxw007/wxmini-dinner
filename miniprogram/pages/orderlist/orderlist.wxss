@@ -45,12 +45,6 @@
   box-sizing: border-box;
  
 }
-.avator-title{
-  color: #aaa;
-  height: 60rpx;
-  line-height: 60rpx;
-  margin-left: 10rpx;
-}
 
 .avator-item{
   border-radius: 50%;
@@ -102,15 +96,20 @@
 
 .price{
   margin-left: 14rpx;
-  color: rgb(252, 180, 24);
+  color: rgb(245, 140, 3);
 }
 .bottom-text{
-  padding-left:10rpx;
-  display: inline-block
+  padding-left:18rpx;
+  display: inline-block;
+  height: 100rpx;
+  padding-top: 4rpx;
 }
 .bottom-text> view{
-  height: 50rpx;
-  line-height: 50rpx;
+  font-size: 32rpx;
+  line-height: 45rpx;
+}
+.bottom-text .red{
+  color: rgb(252, 164, 33);
 }
 .tips-wrap{
   text-align: center;
@@ -174,4 +173,33 @@
 }
 .height-auto{
   height: auto;
+}
+.info-box > view{
+   display: flex;
+  flex: 1;
+  height: 180rpx;
+}
+.info-box .info-item{
+  flex: 1;
+  text-align: center;
+  align-items: center;
+  border: 1rpx solid #ddd;
+  margin-top: -1rpx;
+  box-sizing: border-box;
+  padding-top: 40rpx;
+}
+.info-box .info-item:last-child{
+  margin-left: -1rpx;
+}
+.info-box .info-item > view{
+  width: 100%;
+}
+.info-box .info-item > .num{
+  margin-bottom: 20rpx;
+  font-size: 36rpx;
+  color: #666;
+}
+.info-box .info-item > .text{
+  color: #aaa;
+  font-size: 30rpx;
 }

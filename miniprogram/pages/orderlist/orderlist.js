@@ -16,11 +16,14 @@ Page({
     peopleList: [],
     orderList: [],
     orderList2: [],
-    freeList: [],
-    riceList:[],
+    riceList: [],
     total: 0,
+    riceNum: 0,
+    foodNum: 0,
+    peopleNum:0,
     role: '',
-    isShowInfo: false
+    isShowInfo: false,
+    showPage: false
   },
 
   /**
@@ -56,7 +59,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    
+
   },
 
   /**
@@ -77,8 +80,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-    return{
-      path: 'page'
+    let riceNum = this.data.riceList.length || 0;
+    let foodNum = orderList.length - riceList.length || 0;
+    return {
+      title: `米饭:${riceNum}份, 点餐:${foodNum}份`,
+      path: '/pages/orderlist/orderlist',
     }
   },
   //获取用户角色
@@ -88,11 +94,11 @@ Page({
     }
     let openId = wx.getStorageSync('openId');
     wx.cloud.callFunction({
-      name: 'getRole',
-      data: {
-        openId
-      }
-    })
+        name: 'getRole',
+        data: {
+          openId
+        }
+      })
       .then(res => {
         console.log(res)
         if (res.result.data.length > 0) {
@@ -142,6 +148,61 @@ Page({
     }
     return time;
   },
+  //计算总金额
+  countTotal() {
+    let total = 0;
+    let orderList2 = this.data.orderList2;
+    
+    orderList2.forEach(item => {
+      total += 1000 * item.price * item.peopleList.length / 1000
+    });
+    this.setData({
+      total: total ? total : 0
+    })
+  },
+  //计算总点餐人数
+  countPeopleNum() {
+    let peopleNum = 0;
+    let peopleList = [];
+    let orderList = this.data.orderList;
+    orderList.forEach(item => {
+        peopleList.push(item.avatar)
+    });
+    peopleList = Array.from(new Set(peopleList))
+    this.setData({
+      peopleList
+    })
+  },
+  //计算几份菜
+  countFoodNum() {
+    let foodNum = 0;
+    let orderList2 = this.data.orderList2;
+    orderList2.forEach(item => {
+      if (item.foodName.indexOf('米饭') < 0) {
+        foodNum += item.peopleList.length;
+      }
+    });
+    this.setData({
+      foodNum
+    })
+  },
+  //计算几份饭
+  countRiceNum() {
+    let riceNum = 0;
+    let orderList2 = this.data.orderList2;
+    if (orderList2.length === 0) {
+      return
+    }
+    orderList2.forEach(item => {
+      if (item.foodName.indexOf('米饭') > -1) {
+        riceNum = item.peopleList.length;
+      }
+    });
+    this.setData({
+      riceNum
+    })
+
+  },
   //获取已点餐列表
   getOrderList() {
     wx.showLoading({
@@ -151,7 +212,7 @@ Page({
     const that = this;
     wx.cloud.callFunction({
       name: 'getOrderList',
-      data:{
+      data: {
         date
       },
       success: res => {
@@ -159,26 +220,19 @@ Page({
           let data = res.result.data;
           let orderList = data;
           let total = 0;
-          let peopleList = [];
-          orderList.forEach(orderItem => {
-            peopleList.push(orderItem.avatar);
-            total = (total * 1000 + parseFloat(orderItem.price) * 1000) / 1000;
-          });
-          peopleList = Array.from(new Set(peopleList));
-          that.getFreeList(orderList);
-          that.getRiceList(orderList)
           let arr = that.formatList(orderList)
           this.setData({
             orderList2: arr,
-            peopleList: peopleList,
             orderList,
-            total
+            total,
+            showPage: true
           });
+          that.countTotal();
+          that.countFoodNum();
+          that.countRiceNum();
+          that.countPeopleNum();
         }
-        wx.hideLoading()
-
-
-
+        wx.hideLoading();
       },
       fail: err => {
         wx.hideLoading()
@@ -187,25 +241,25 @@ Page({
     })
   },
   //生成蹭吃人员列表
-  getFreeList(arr) {
-    let freeList = [];
-    arr.forEach(item => {
-      if(!item.foodName){
-        let p = {};
-        p.avatar = item.avatar;
-        p.openId = item.openId;
-        freeList.push(p)
-      }
-    })
-    this.setData({
-      freeList
-    })
-  },
+  // getFreeList(arr) {
+  //   let freeList = [];
+  //   arr.forEach(item => {
+  //     if (!item.foodName) {
+  //       let p = {};
+  //       p.avatar = item.avatar;
+  //       p.openId = item.openId;
+  //       freeList.push(p)
+  //     }
+  //   })
+  //   this.setData({
+  //     freeList
+  //   })
+  // },
   //生成米饭列表
   getRiceList(arr) {
     let riceList = [];
     arr.forEach(item => {
-      if (item.foodName.indexOf('米饭')> -1) {
+      if (item.foodName.indexOf('米饭') > -1) {
         let p = {};
         p.avatar = item.avatar;
         p.openId = item.openId;
@@ -225,13 +279,15 @@ Page({
         content: '请先登录',
         showCancel: false,
         success(res) {
-
+          wx.navigateTo({
+            url: '/pages/index/index'
+          })
         }
       })
       return
     }
     wx.navigateTo({
-      url: '../../pages/makeOrder/makeOrder'
+      url: '/pages/makeOrder/makeOrder'
     })
   },
   //蹭吃
@@ -243,7 +299,9 @@ Page({
         content: '请先登录',
         showCancel: false,
         success(res) {
-
+          wx.navigateTo({
+            url: '/pages/index/index'
+          })
         }
       })
       return
@@ -253,10 +311,10 @@ Page({
     let isMakeOrder = orderList.find(item => {
       return item.openId === openId
     })
-    if (!!isMakeOrder){
+    if (!!isMakeOrder) {
       wx.showModal({
         title: '提示',
-        content: '你已点菜',
+        content: '你已入伙',
         showCancel: false,
         success(res) {
 
@@ -278,8 +336,14 @@ Page({
         }
       })
       .then(res => {
-        that.getOrderList()
-        console.log(res)
+        wx.showModal({
+          title: '提示',
+          content: '蹭吃成功',
+          showCancel: false,
+          success(res) {
+            that.getOrderList()
+          }
+        })
       })
       .catch(err => {
         console.log(err)
@@ -296,26 +360,26 @@ Page({
       if (!foodName){
         return
       }
-      let t = {
-        foodName: '',
-        price: null,
-        peopleList:[],
-        itemList: [],
-      };
-      arr.forEach(orderItem => {
-        if (orderItem.foodName === foodName) {
-          t.foodName = foodName;
-          t.price = orderItem.price;
-          t.isShowPeopleList = false;
-          let p = {};
-          p.avatar = orderItem.avatar;
-          p.openId = orderItem.openId;
-          t.peopleList.push(p)
-          t.itemList.push(orderItem)
-        }
-      })
-      orderList.push(t)
-
+     
+        let t = {
+          foodName: '',
+          price: null,
+          peopleList: [],
+          itemList: [],
+        };
+        arr.forEach(orderItem => {
+          if (orderItem.foodName === foodName) {
+            t.foodName = foodName;
+            t.price = orderItem.price;
+            t.isShowPeopleList = false;
+            let p = {};
+            p.avatar = orderItem.avatar;
+            p.openId = orderItem.openId;
+            t.peopleList.push(p)
+            t.itemList.push(orderItem)
+          }
+        })
+        orderList.push(t)
     })
     return orderList
   },
@@ -339,6 +403,7 @@ Page({
     this.setData({
       ListTouchDirection
     })
+
   },
 
   // ListTouch计算滚动
@@ -356,14 +421,14 @@ Page({
       ListTouchDirection: null
     })
   },
-  showPeopleList(e){
-    let currentIndex = e.currentTarget.dataset.index;
+  showPeopleList(e) {
+    let currentIndex = e.currentTarget.dataset.idx;
     let str = `orderList2[${currentIndex}].isShowPeopleList`;
     this.setData({
       [str]: true
     })
   },
-  hidePeopleList(e){
+  hidePeopleList(e) {
     let currentIndex = e.currentTarget.dataset.index;
     let str = `orderList2[${currentIndex}].isShowPeopleList`;
     this.setData({
@@ -371,48 +436,90 @@ Page({
     })
   },
   delOrder(e) {
+    const that = this;
     wx.showLoading({
       title: '删除中',
     });
     let date = this.formatDate(1);
     let foodName = e.currentTarget.dataset.foodname;
     let openId = e.currentTarget.dataset.item.openId;
+    let rowIndex = e.currentTarget.dataset.rowindex;
+    let avatarIndex = e.currentTarget.dataset.avatarindex;
+    let orderList2 = that.data.orderList2;
+    let peopleList = orderList2[rowIndex].peopleList;
+
     wx.cloud.callFunction({
-      name: 'delOrder',
-      data:{
-        foodName,
-        openId,
-        date
-      }
-    })
-    .then( res => {
-      wx.hideLoading();
-      if (res.result.errMsg === 'collection.remove:ok'){
-        this.getOrderList()
-      }
-    })
-    .catch( err => {
-      wx.hideLoading();
-      console.log(err)
-    })
+        name: 'delOrder',
+        data: {
+          foodName,
+          openId,
+          date
+        }
+      })
+      .then(res => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '删除成功',
+          icon: 'success',
+          duration: 1000
+        })
+        if (res.result.errMsg === 'collection.remove:ok') {
+          let str = `orderList2[${rowIndex}].peopleList`
+          if (peopleList.length === 1) {
+            orderList2.splice(rowIndex, 1)
+            that.setData({
+              orderList2
+            })
+          } else {
+            peopleList.splice(avatarIndex, 1)
+            that.setData({
+              [str]: peopleList
+            })
+          }
+          that.countTotal();
+          that.countFoodNum();
+          that.countRiceNum();
+          that.countPeopleNum();
+        }
+      })
+      .catch(err => {
+        wx.hideLoading();
+        console.log(err)
+      })
   },
-  delOrderRow(e){
+  delOrderRow(e) {
+    const that = this;
     wx.showLoading({
       title: '删除中',
     });
     let date = this.formatDate(1);
+    let rowIndex = e.currentTarget.dataset.rowindex;
     let foodName = e.currentTarget.dataset.foodname;
+    let orderList2 = this.data.orderList2;
     wx.cloud.callFunction({
-      name: 'delOrderRow',
-      data: {
-        foodName,
-        date
-      }
-    })
+        name: 'delOrderRow',
+        data: {
+          foodName,
+          date
+        }
+      })
       .then(res => {
-        wx.hideLoading()
+        wx.hideLoading();
+        wx.showToast({
+          title: '删除成功',
+          icon: 'success',
+          duration: 1000
+        })
         if (res.result.errMsg === 'collection.remove:ok') {
-          this.getOrderList()
+          // this.getOrderList()
+          orderList2.splice(rowIndex, 1)
+          that.setData({
+            orderList2
+          })
+          that.countTotal();
+          that.countFoodNum();
+          that.countRiceNum();
+          that.countPeopleNum();
         }
       })
       .catch(err => {
@@ -420,5 +527,5 @@ Page({
         console.log(err)
       })
   }
- 
+
 })

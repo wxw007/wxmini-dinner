@@ -12,6 +12,7 @@ Page({
     isMakeOrder: false,
     openId: '',
     userOrder:[],
+    flag: true,
 
   },
 
@@ -96,7 +97,8 @@ Page({
           })
         })
       that.setData({
-        menuList
+        menuList,
+        flag: true
       })
       wx.hideLoading()
 
@@ -166,10 +168,17 @@ Page({
       })
       return
     }
+    if(!this.data.flag){
+      return
+    }
+    this.setData({
+      flag: false
+    })
     wx.showLoading({
       title: '点菜中...',
     })
     let item = e.currentTarget.dataset.item;
+    let index = e.currentTarget.dataset.idx;
     item.openId = wx.getStorageSync('openId');
     item.avatar = wx.getStorageSync('avatar');
     item.date = this.formatDate(1);
@@ -185,7 +194,12 @@ Page({
           icon: 'success',
           duration: 1000,
           success(){
-            that.getMenuList()
+            // that.getMenuList()
+            let str = `menuList[${index}].disabled`;
+            that.setData({
+              [str]: true,
+              flag: true
+            })
           }
         })
         wx.hideLoading();
