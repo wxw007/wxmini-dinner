@@ -28,9 +28,8 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 4,
 			"list": [
-				
 				{
 					"id": -1,
 					"name": "index",
@@ -52,12 +51,23 @@
 					"query": "",
 					"scene": null
 				},
-				
 				{
 					"id": -1,
 					"name": "admin",
 					"pathName": "pages/admin/admin",
+					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "转发",
+					"pathName": "pages/orderlist/orderlist",
+					"scene": 1044,
+					"shareInfo": {
+						"groupName": "测试模拟群0",
+						"shareName": "-bELv7a-PU1FG6A8nPIpft2hCDOeqK2AMNWaLCUcr3M@cr4dev",
+						"shareKey": "2cn0e7jgfDwY_cLEUwQKNA581Ssu1pNNPZBlyyF7ZdeTon5wkUS6CfqYKeJ_3Q3iMIr2t02yUm-bhViFZTnf9w~~"
+					}
 				}
 			]
 		}

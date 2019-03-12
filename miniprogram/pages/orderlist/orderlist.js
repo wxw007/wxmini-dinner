@@ -20,10 +20,11 @@ Page({
     total: 0,
     riceNum: 0,
     foodNum: 0,
-    peopleNum:0,
+    peopleNum: 0,
     role: '',
     isShowInfo: false,
-    showPage: false
+    showPage: false,
+    average: 0
   },
 
   /**
@@ -80,11 +81,16 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-    let riceNum = this.data.riceList.length || 0;
-    let foodNum = orderList.length - riceList.length || 0;
+    // let riceNum = this.data.riceList.length || 0;
+    // let foodNum = orderList.length - riceList.length || 0;
+    // return {
+    //   title: `米饭:${riceNum}份, 点餐:${foodNum}份`,
+    //   path: '/pages/orderlist/orderlist',
+    // }
     return {
-      title: `米饭:${riceNum}份, 点餐:${foodNum}份`,
-      path: '/pages/orderlist/orderlist',
+      title: '今天吃沙县',
+      // imageUrl: 'https://image.weilanwl.com/color2.0/share2215.jpg',
+      // path: '/pages/index/index'
     }
   },
   //获取用户角色
@@ -152,7 +158,7 @@ Page({
   countTotal() {
     let total = 0;
     let orderList2 = this.data.orderList2;
-    
+
     orderList2.forEach(item => {
       total += 1000 * item.price * item.peopleList.length / 1000
     });
@@ -166,12 +172,27 @@ Page({
     let peopleList = [];
     let orderList = this.data.orderList;
     orderList.forEach(item => {
-        peopleList.push(item.avatar)
+      peopleList.push(item.avatar)
     });
     peopleList = Array.from(new Set(peopleList))
     this.setData({
       peopleList
     })
+  },
+  //计算人均费用
+  countAverage() {
+    let total = this.data.total;
+    let num = this.data.peopleList.length;
+    if (num > 0) {
+      let average = total / num;
+      this.setData({
+        average: average.toFixed(2)
+      })
+    } else {
+      this.setData({
+        average: 0
+      })
+    }
   },
   //计算几份菜
   countFoodNum() {
@@ -231,6 +252,7 @@ Page({
           that.countFoodNum();
           that.countRiceNum();
           that.countPeopleNum();
+          that.countAverage();
         }
         wx.hideLoading();
       },
@@ -357,29 +379,29 @@ Page({
     });
     foodList = Array.from(new Set(foodList));
     foodList.forEach(foodName => {
-      if (!foodName){
+      if (!foodName) {
         return
       }
-     
-        let t = {
-          foodName: '',
-          price: null,
-          peopleList: [],
-          itemList: [],
-        };
-        arr.forEach(orderItem => {
-          if (orderItem.foodName === foodName) {
-            t.foodName = foodName;
-            t.price = orderItem.price;
-            t.isShowPeopleList = false;
-            let p = {};
-            p.avatar = orderItem.avatar;
-            p.openId = orderItem.openId;
-            t.peopleList.push(p)
-            t.itemList.push(orderItem)
-          }
-        })
-        orderList.push(t)
+
+      let t = {
+        foodName: '',
+        price: null,
+        peopleList: [],
+        itemList: [],
+      };
+      arr.forEach(orderItem => {
+        if (orderItem.foodName === foodName) {
+          t.foodName = foodName;
+          t.price = orderItem.price;
+          t.isShowPeopleList = false;
+          let p = {};
+          p.avatar = orderItem.avatar;
+          p.openId = orderItem.openId;
+          t.peopleList.push(p)
+          t.itemList.push(orderItem)
+        }
+      })
+      orderList.push(t)
     })
     return orderList
   },
@@ -437,95 +459,150 @@ Page({
   },
   delOrder(e) {
     const that = this;
-    wx.showLoading({
-      title: '删除中',
-    });
-    let date = this.formatDate(1);
-    let foodName = e.currentTarget.dataset.foodname;
-    let openId = e.currentTarget.dataset.item.openId;
-    let rowIndex = e.currentTarget.dataset.rowindex;
-    let avatarIndex = e.currentTarget.dataset.avatarindex;
-    let orderList2 = that.data.orderList2;
-    let peopleList = orderList2[rowIndex].peopleList;
+    wx.showModal({
+      title: '提示',
+      content: '确定删除吗?',
+      success(res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '删除中',
+          });
+          let date = that.formatDate(1);
+          let foodName = e.currentTarget.dataset.foodname;
+          let openId = e.currentTarget.dataset.item.openId;
+          let rowIndex = e.currentTarget.dataset.rowindex;
+          let avatarIndex = e.currentTarget.dataset.avatarindex;
+          let orderList2 = that.data.orderList2;
+          let peopleList = orderList2[rowIndex].peopleList;
 
-    wx.cloud.callFunction({
-        name: 'delOrder',
-        data: {
-          foodName,
-          openId,
-          date
-        }
-      })
-      .then(res => {
-        wx.hideLoading();
-        wx.showToast({
-          title: '删除成功',
-          icon: 'success',
-          duration: 1000
-        })
-        if (res.result.errMsg === 'collection.remove:ok') {
-          let str = `orderList2[${rowIndex}].peopleList`
-          if (peopleList.length === 1) {
-            orderList2.splice(rowIndex, 1)
-            that.setData({
-              orderList2
+          wx.cloud.callFunction({
+              name: 'delOrder',
+              data: {
+                foodName,
+                openId,
+                date
+              }
             })
-          } else {
-            peopleList.splice(avatarIndex, 1)
-            that.setData({
-              [str]: peopleList
+            .then(res => {
+              wx.hideLoading();
+
+              if (res.result.errMsg === 'collection.remove:ok') {
+                wx.showToast({
+                  title: '删除成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+                let str = `orderList2[${rowIndex}].peopleList`
+                if (peopleList.length === 1) {
+                  orderList2.splice(rowIndex, 1)
+                  that.setData({
+                    orderList2
+                  })
+                  let orderList3 = [];
+                  that.data.orderList.forEach(item => {
+                    if (item.foodName === foodName && item.date === date) {
+                      return
+                    }
+                    orderList3.push(item);
+                  })
+                  that.setData({
+                    orderList: orderList3
+                  })
+                } else {
+                  peopleList.splice(avatarIndex, 1)
+                  that.setData({
+                    [str]: peopleList
+                  })
+                  let orderList3 = [];
+                  that.data.orderList.forEach(item => {
+                    if (item.foodName === foodName && item.openId === openId && item.date === date) {
+                      return
+                    }
+                    orderList3.push(item);
+                    that.setData({
+                      orderList: orderList3
+                    })
+                  })
+                }
+                
+                that.countTotal();
+                that.countFoodNum();
+                that.countRiceNum();
+                that.countPeopleNum();
+                that.countAverage();
+              }
             })
-          }
-          that.countTotal();
-          that.countFoodNum();
-          that.countRiceNum();
-          that.countPeopleNum();
+            .catch(err => {
+              wx.hideLoading();
+              console.log(err)
+            })
+        } else if (res.cancel) {
+          return
         }
-      })
-      .catch(err => {
-        wx.hideLoading();
-        console.log(err)
-      })
+      }
+    })
+
   },
   delOrderRow(e) {
     const that = this;
-    wx.showLoading({
-      title: '删除中',
-    });
-    let date = this.formatDate(1);
-    let rowIndex = e.currentTarget.dataset.rowindex;
-    let foodName = e.currentTarget.dataset.foodname;
-    let orderList2 = this.data.orderList2;
-    wx.cloud.callFunction({
-        name: 'delOrderRow',
-        data: {
-          foodName,
-          date
+    wx.showModal({
+      title: '提示',
+      content: '确定删除吗?',
+      success(res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '删除中',
+          });
+          let date = that.formatDate(1);
+          let rowIndex = e.currentTarget.dataset.rowindex;
+          let foodName = e.currentTarget.dataset.foodname;
+          let orderList2 = that.data.orderList2;
+          wx.cloud.callFunction({
+              name: 'delOrderRow',
+              data: {
+                foodName,
+                date
+              }
+            })
+            .then(res => {
+              wx.hideLoading();
+              if (res.result.errMsg === 'collection.remove:ok') {
+                wx.showToast({
+                  title: '删除成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+                orderList2.splice(rowIndex, 1)
+                that.setData({
+                  orderList2
+                })
+                let orderList3 = [];
+                that.data.orderList.forEach(item => {
+                  if (item.foodName === foodName && item.date === date) {
+                    return
+                  }
+                  orderList3.push(item);
+                })
+                that.setData({
+                  orderList: orderList3
+                })
+                that.countTotal();
+                that.countFoodNum();
+                that.countRiceNum();
+                that.countPeopleNum();
+                that.countAverage();
+              }
+            })
+            .catch(err => {
+              wx.hideLoading()
+              console.log(err)
+            })
+        } else if (res.cancel) {
+          return
         }
-      })
-      .then(res => {
-        wx.hideLoading();
-        wx.showToast({
-          title: '删除成功',
-          icon: 'success',
-          duration: 1000
-        })
-        if (res.result.errMsg === 'collection.remove:ok') {
-          // this.getOrderList()
-          orderList2.splice(rowIndex, 1)
-          that.setData({
-            orderList2
-          })
-          that.countTotal();
-          that.countFoodNum();
-          that.countRiceNum();
-          that.countPeopleNum();
-        }
-      })
-      .catch(err => {
-        wx.hideLoading()
-        console.log(err)
-      })
+      }
+    })
+
   }
 
 })

@@ -79,7 +79,8 @@
       </view>
     </view>
     <view class='btn bg-green' bindtap="gotoMakeOrder">我要点菜</view>
-    <view class='btn bg-orange' bindtap="freeEat">我要蹭吃</view>
+    <!-- <view class='btn bg-orange' bindtap="freeEat">我要蹭吃</view> -->
+    <view class='btn bg-orange'>人均 {{average}} 元</view>
   </view>
 </view>
 <view wx:if="{{showPage && orderList.length === 0}}">

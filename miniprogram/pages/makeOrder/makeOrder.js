@@ -119,6 +119,13 @@ Page({
 
         if (res.errMsg === "cloud.callFunction:ok") {
           let menuList = res.result.data;
+          let index = menuList.findIndex( item => {
+            return item.foodName.indexOf('米饭')>-1
+          })
+          if(index != -1){
+            let riceItem = menuList.splice(index, 1)[0];
+            menuList.unshift(riceItem);
+          }
           that.getUserOrder(menuList)
         }
       },

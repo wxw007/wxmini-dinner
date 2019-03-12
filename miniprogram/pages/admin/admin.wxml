@@ -32,6 +32,6 @@
     <view class='title'>价格</view>
     <input  value="{{price}}" placeholder="输入价格" class='radius' name='input' type="digit" bindinput="inputPrice"></input>
   </view>
-  <button class='cu-btn block bg-blue margin-tb-sm lg' bindtap="submit">
+  <button class='cu-btn block bg-blue  lg' bindtap="submit" style="margin-top:10rpx;border-radius: 0">
     <text class='iconfont-spin'></text> 提交</button>
 </view>

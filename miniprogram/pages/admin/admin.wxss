@@ -9,11 +9,10 @@
   bottom: 0;
   width: 100%;
   border-top: 1rpx solid #eee;
+  background: #eee;
 }
 .menu-list{
-  position: fixed;
-  bottom: 320rpx;
-  top: 0;
+  padding-bottom: 320rpx;
   width: 100%;
 }
 .cu-list>.cu-item.move-cur{
